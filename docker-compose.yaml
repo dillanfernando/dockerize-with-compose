@@ -1,0 +1,35 @@
+version: '3'
+services:
+  
+
+  httpd:
+    build: ./httpd_local
+    environment:
+          - wildflyIP=web
+          - DILLAN=123123
+    
+    ports:
+        - 80:80
+    depends_on:
+        - web
+        
+  web:
+    build: ./wildfly
+    environment:
+          - wildflyIP=web
+    ports:
+      - 8080:8080
+      - 9990:9990
+    depends_on:
+      - activemq
+      
+  activemq:
+    image: webcenter/activemq
+    ports:
+      - 8161:8161
+      - 61616:61616
+      - 5672:5672
+      - 61613:61613
+      - 1883:1883
+      - 61614:61614
+      
